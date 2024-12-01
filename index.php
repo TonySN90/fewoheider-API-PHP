@@ -18,10 +18,10 @@ $router->add('GET', '/', 'HomeController@index');
 $router->add('GET', '/api/v1/bookings', 'BookingController@index');
 
 // Guests
-$router->add('GET', '/api/v1/guests', 'GuestsController@index');
+$router->add('GET', '/api/v1/guests', 'GuestController@index');
 
 // Rooms
-$router->add('GET', '/api/v1/rooms', 'RoomsController@index');
+$router->add('GET', '/api/v1/rooms', 'RoomController@index');
 
 /*$router->add('POST', '/api/v1/bookings', 'app\controllers\BookingController@store');*/
 

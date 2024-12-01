@@ -13,7 +13,7 @@ class Router
         $this->routes[$method][$path] = $controllerAction;
     }
 
-    public function dispatch()
+    public function dispatch() : void
     {
         $method = $_SERVER['REQUEST_METHOD'];
         $path = $_SERVER['REQUEST_URI'];
@@ -30,7 +30,7 @@ class Router
 
                 if (class_exists($class) && method_exists($class, $action)) {
                     $controller = new $class($db);
-                    return call_user_func_array([$controller, $action], array_slice($matches, 1));
+                    call_user_func_array([$controller, $action], array_slice($matches, 1));
                 }
             }
         }

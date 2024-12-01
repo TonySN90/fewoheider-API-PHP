@@ -11,8 +11,8 @@ class Database
     private string $db_name = 'fewo_heider';
     private string $username = 'Tony';
     private string $password = 'ged33njv';
-    private $conn;
-    private static $instance;
+    private ?PDO $conn = null;
+    private static ?Database $instance = null;
 
     private function __construct()
     {
@@ -28,9 +28,8 @@ class Database
         return self::$instance->conn;
     }
 
-    private function connect()
+    private function connect(): void
     {
-        $this->conn = null;
         try {
             $this->conn = new PDO(
                 "mysql:host=$this->host;dbname=$this->db_name;charset=utf8",
@@ -45,5 +44,6 @@ class Database
     }
 
     private function __clone() {}
+
     public function __wakeup() {}
 }

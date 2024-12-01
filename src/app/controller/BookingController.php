@@ -6,7 +6,7 @@ use app\models\BookingModel;
 
 class BookingController extends BaseController
 {
-    public function index()
+    public function index() : void
     {
         $bookingModel = new BookingModel($this->database);
         $bookings = $bookingModel->getAll();

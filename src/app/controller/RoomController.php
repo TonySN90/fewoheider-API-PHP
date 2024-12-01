@@ -4,9 +4,9 @@ namespace app\controller;
 
 use app\models\RoomModel;
 
-class RoomsController extends BaseController
+class RoomController extends BaseController
 {
-    public function index()
+    public function index() : void
     {
         $roomsModel = new RoomModel($this->database);
         $rooms = $roomsModel->getAll();

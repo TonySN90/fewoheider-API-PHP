@@ -4,9 +4,9 @@ namespace app\controller;
 
 use app\models\GuestModel;
 
-class GuestsController extends BaseController
+class GuestController extends BaseController
 {
-    public function index()
+    public function index() : void
     {
         $guestsModel = new GuestModel($this->database);
         $guests = $guestsModel->getAll();
