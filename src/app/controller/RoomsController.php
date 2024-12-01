@@ -9,7 +9,7 @@ class RoomsController extends BaseController
     public function index()
     {
         $roomsModel = new RoomModel($this->database);
-        $rooms = $roomsModel->getAllRooms();
+        $rooms = $roomsModel->getAll();
 
         $this->jsonResponse(['status' => 'success', 'data' => $rooms]);
     }
