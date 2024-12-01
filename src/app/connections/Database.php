@@ -7,22 +7,43 @@ use PDOException;
 
 class Database
 {
-    private $host = 'localhost';
-    private $db_name = 'fewo_heider';
-    private $username = 'Tony';
-    private $password = 'ged33njv';
-    public $conn;
+    private string $host = 'localhost';
+    private string $db_name = 'fewo_heider';
+    private string $username = 'Tony';
+    private string $password = 'ged33njv';
+    private $conn;
+    private static $instance;
 
-    public function connect()
+    private function __construct()
+    {
+        $this->connect();
+    }
+
+    public static function getInstance(): PDO
+    {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+
+        return self::$instance->conn;
+    }
+
+    private function connect()
     {
         $this->conn = null;
         try {
-            $this->conn = new PDO("mysql:host=$this->host;dbname=$this->db_name;charset=utf8", $this->username, $this->password);
+            $this->conn = new PDO(
+                "mysql:host=$this->host;dbname=$this->db_name;charset=utf8",
+                $this->username,
+                $this->password
+            );
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
-            echo "Datenbankverbindung fehlgeschlagen: " . $e->getMessage();
+            echo "database connection failed: " . $e->getMessage();
             exit;
         }
-        return $this->conn;
     }
+
+    private function __clone() {}
+    public function __wakeup() {}
 }
