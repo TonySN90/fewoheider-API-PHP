@@ -11,6 +11,10 @@ class RoomController extends BaseController
         $roomsModel = new RoomModel($this->database);
         $rooms = $roomsModel->getAll();
 
-        $this->jsonResponse(['status' => 'success', 'data' => $rooms]);
+        $this->jsonResponse([
+            'status' => 'success',
+            'results' => count($rooms),
+            'requestAt' => date('Y-m-d H:i:s'),
+            'data' => $rooms]);
     }
 }

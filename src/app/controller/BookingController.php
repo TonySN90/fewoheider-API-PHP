@@ -11,6 +11,10 @@ class BookingController extends BaseController
         $bookingModel = new BookingModel($this->database);
         $bookings = $bookingModel->getAll();
 
-        $this->jsonResponse(['status' => 'success', 'data' => $bookings]);
+        $this->jsonResponse([
+            'status' => 'success',
+            'results' => count($bookings),
+            'requestAt' => date('Y-m-d H:i:s'),
+            'data' => $bookings]);
     }
 }

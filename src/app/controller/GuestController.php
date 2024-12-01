@@ -11,6 +11,10 @@ class GuestController extends BaseController
         $guestsModel = new GuestModel($this->database);
         $guests = $guestsModel->getAll();
 
-        $this->jsonResponse(['status' => 'success', 'data' => $guests]);
+        $this->jsonResponse([
+            'status' => 'success',
+            'results' => count($guests),
+            'requestAt' => date('Y-m-d H:i:s'),
+            'data' => $guests]);
     }
 }
