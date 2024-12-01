@@ -10,6 +10,8 @@ use PDO;
 
 abstract class BaseModel
 {
+    use PrepareConditions, PrepareFields, PrepareOrder, PreparePagination;
+
     protected $conn;
     protected $table;
 
