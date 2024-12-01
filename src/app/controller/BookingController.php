@@ -6,15 +6,14 @@ use app\models\BookingModel;
 
 class BookingController extends BaseController
 {
-    public function index() : void
+    public function viewAll(): void
     {
-        $bookingModel = new BookingModel($this->database);
-        $bookings = $bookingModel->getAll();
+        $this->handleViewAll(BookingModel::class);
+    }
 
-        $this->jsonResponse([
-            'status' => 'success',
-            'results' => count($bookings),
-            'requestAt' => date('Y-m-d H:i:s'),
-            'data' => $bookings]);
+    public function viewById(int $id): void
+    {
+        $this->handleViewById(BookingModel::class, $id);
     }
 }
+

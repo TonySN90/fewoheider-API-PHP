@@ -6,15 +6,13 @@ use app\models\RoomModel;
 
 class RoomController extends BaseController
 {
-    public function index() : void
+    public function viewAll(): void
     {
-        $roomsModel = new RoomModel($this->database);
-        $rooms = $roomsModel->getAll();
+        $this->handleViewAll(RoomModel::class);
+    }
 
-        $this->jsonResponse([
-            'status' => 'success',
-            'results' => count($rooms),
-            'requestAt' => date('Y-m-d H:i:s'),
-            'data' => $rooms]);
+    public function viewById(int $id): void
+    {
+        $this->handleViewById(RoomModel::class, $id);
     }
 }

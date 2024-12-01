@@ -6,15 +6,13 @@ use app\models\GuestModel;
 
 class GuestController extends BaseController
 {
-    public function index() : void
+    public function viewAll(): void
     {
-        $guestsModel = new GuestModel($this->database);
-        $guests = $guestsModel->getAll();
+        $this->handleViewAll(GuestModel::class);
+    }
 
-        $this->jsonResponse([
-            'status' => 'success',
-            'results' => count($guests),
-            'requestAt' => date('Y-m-d H:i:s'),
-            'data' => $guests]);
+    public function viewById(int $id): void
+    {
+        $this->handleViewById(GuestModel::class, $id);
     }
 }
