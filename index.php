@@ -8,22 +8,12 @@ require_once "autoload.php";
 
 use app\routes\Router;
 
-
 $router = new Router();
 
-//Home
-$router->add('GET', '/', 'HomeController@index');
-
-// Bookings
-$router->add('GET', '/api/v1/bookings', 'BookingController@index');
-
-// Guests
-$router->add('GET', '/api/v1/guests', 'GuestController@index');
-
-// Rooms
-$router->add('GET', '/api/v1/rooms', 'RoomController@index');
-
-/*$router->add('POST', '/api/v1/bookings', 'app\controllers\BookingController@store');*/
+$router->addRoute('GET', '/', 'HomeController@viewAll');
+$router->addApiRoutes('/api/v1/bookings', 'BookingController');
+$router->addApiRoutes('/api/v1/guests', 'GuestController');
+$router->addApiRoutes('/api/v1/rooms', 'RoomController');
 
 $router->dispatch();
 
