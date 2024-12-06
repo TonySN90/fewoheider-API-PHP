@@ -53,7 +53,7 @@ class Router
         $this->addRoute('GET', "$prefix", "$controller@viewAll");
         $this->addRoute('GET', "$prefix/{id}", "$controller@viewById");
         $this->addRoute('POST', "$prefix", "$controller@create");
-        $this->addRoute('PUT', "$prefix/{id}", "$controller@update");
+        $this->addRoute('PATCH', "$prefix/{id}", "$controller@update");
         $this->addRoute('DELETE', "$prefix/{id}", "$controller@delete");
     }
 }
