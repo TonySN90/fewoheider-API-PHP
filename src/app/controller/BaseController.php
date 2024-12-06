@@ -70,8 +70,50 @@ abstract class BaseController
         }
     }
 
+    function handleCreate(string $modelClass): void {
+
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $model = new $modelClass($this->database);
+        $model->create($data);
+        $this->jsonResponse([
+            'status' => 'success',
+            'createdAt' => date('Y-m-d H:i:s'),
+            'data' => $data
+        ]);
+    }
+
+    function handleUpdate(string $modelClass, int $id): void {
+
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $model = new $modelClass($this->database);
+        $model->update($id, $data);
+        $this->jsonResponse([
+            'status' => 'success',
+            'updatedAt' => date('Y-m-d H:i:s'),
+            'data' => $data
+        ]);
+    }
+
+    function handleDelete(string $modelClass, int $id): void {
+
+        $model = new $modelClass($this->database);
+        $model->delete($id);
+        $this->jsonResponse([
+            'status' => 'success',
+            'deletedAt' => date('Y-m-d H:i:s')
+        ]);
+    }
+
     abstract public function viewAll(): void;
     abstract public function viewById(int $id): void;
+
+    abstract public function create(): void;
+
+    abstract public function update(int $id): void;
+
+    abstract public function delete(int $id): void;
 }
 
 
