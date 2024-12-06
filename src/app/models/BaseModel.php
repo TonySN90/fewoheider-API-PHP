@@ -12,7 +12,7 @@ abstract class BaseModel
 {
     use PrepareConditions, PrepareFields, PrepareOrder, PreparePagination;
 
-    protected $conn;
+    protected PDO $conn;
     protected $table;
 
     public function __construct($db)
@@ -65,5 +65,41 @@ abstract class BaseModel
 
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+    }
+
+    public function create(array $data): int
+    {
+        $fields = implode(',', array_keys($data));
+
+        $placeholders = ':' . implode(', :', array_keys($data));
+        $query = "INSERT INTO " . $this->table . " ($fields) VALUES ($placeholders)";
+        $stmt = $this->conn->prepare($query);
+        foreach ($data as $key => $value) {
+            $stmt->bindValue(':' . $key, $value);
+        }
+        $stmt->execute();
+        return $this->conn->lastInsertId();
+    }
+
+    public function update(int $id, array $data): bool
+    {
+        $fields = [];
+        foreach ($data as $key => $value) {
+            $fields[] = "$key = :$key";
+        }
+        $query = "UPDATE " . $this->table . " SET " . implode(', ', $fields) . " WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        foreach ($data as $key => $value) {
+            $stmt->bindValue(':' . $key, $value);
+        }
+        $stmt->bindParam(':id', $id);
+        return $stmt->execute();
+    }
+
+    public function delete(int $id): bool {
+        $query = "DELETE FROM " . $this->table . " WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id);
+        return $stmt->execute();
     }
 }
