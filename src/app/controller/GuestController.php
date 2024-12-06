@@ -15,4 +15,19 @@ class GuestController extends BaseController
     {
         $this->handleViewById(GuestModel::class, $id);
     }
+
+    public function create(): void
+    {
+        $this->handleCreate(GuestModel::class);
+    }
+
+    public function update(int $id): void
+    {
+        $this->handleUpdate(GuestModel::class, $id);
+    }
+
+    public function delete(int $id): void
+    {
+        $this->handleDelete(GuestModel::class, $id);
+    }
 }

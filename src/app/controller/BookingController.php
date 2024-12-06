@@ -15,5 +15,20 @@ class BookingController extends BaseController
     {
         $this->handleViewById(BookingModel::class, $id);
     }
+
+    public function create(): void
+    {
+        $this->handleCreate(BookingModel::class);
+    }
+
+    public function update(int $id): void
+    {
+        $this->handleUpdate(BookingModel::class, $id);
+    }
+
+    public function delete(int $id): void
+    {
+        $this->handleDelete(BookingModel::class, $id);
+    }
 }
 
