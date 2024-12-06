@@ -11,9 +11,9 @@ use app\routes\Router;
 $router = new Router();
 
 $router->addRoute('GET', '/', 'HomeController@index');
-$router->addApiRoutes('/api/v1/bookings', 'BookingController');
-$router->addApiRoutes('/api/v1/guests', 'GuestController');
-$router->addApiRoutes('/api/v1/rooms', 'RoomController');
+$router->addApiRoutes('/v1/bookings', 'BookingController');
+$router->addApiRoutes('/v1/guests', 'GuestController');
+$router->addApiRoutes('/v1/rooms', 'RoomController');
 
 $router->dispatch();
 
