@@ -2,10 +2,17 @@
 
 namespace app\controller;
 
-class HomeController extends BaseController
+class HomeController
 {
     public function index() : void
     {
-        $this->jsonResponse(['status' => 'success', 'data' => "Fewo Heider"]);
+        http_response_code(200);
+        header('Content-Type: application/json');
+        echo json_encode([
+            'status' => 'success',
+            'requestAt' => date('Y-m-d H:i:s'),
+            'message' => "API ready"
+        ]);
     }
+
 }
