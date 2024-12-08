@@ -66,4 +66,52 @@ class UserModel extends BaseModel
 
         return $user ?: null;
     }
+
+    /**
+     * Retrieves a user by their email.
+     *
+     * @param string $email The email of the user to retrieve.
+     *
+     * @return array|null Returns an associative array of the user's data if found, or null if not found.
+     */
+    public function getUserByEmail(string $email): ?array
+    {
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE email = :email");
+        $stmt->execute([':email' => $email]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $user ?: null;
+    }
+
+    /**
+     * Retrieves a user by their verification token.
+     *
+     * @param string $token The verification token to look for.
+     *
+     * @return array|null Returns an associative array of the user's data if found, or null if not found.
+     */
+    public function getUserByVerificationToken(string $token): ?array
+    {
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE verification_token = :token");
+        $stmt->execute([':token' => $token]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $user ?: null;
+    }
+
+    /**
+     * Verifies a user account using the provided verification token.
+     *
+     * @param string $token The verification token to verify the user.
+     *
+     * @return bool Returns true if the user was successfully verified, otherwise false.
+     */
+    public function verifyUser(string $token): bool
+    {
+        $stmt = $this->db->prepare(
+            "UPDATE users SET is_verified = 1, verification_token = NULL 
+        WHERE verification_token = :token AND is_verified = 0"
+        );
+        return $stmt->execute([':token' => $token]);
+    }
 }
