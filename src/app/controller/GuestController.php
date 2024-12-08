@@ -6,14 +6,14 @@ use app\models\GuestModel;
 
 class GuestController extends BaseController
 {
-    public function viewAll(): void
+    public function getAll(): void
     {
-        $this->handleViewAll(GuestModel::class);
+        $this->handleGetAllData(GuestModel::class);
     }
 
-    public function viewById(int $id): void
+    public function getById(int $id): void
     {
-        $this->handleViewById(GuestModel::class, $id);
+        $this->handleGetDataById(GuestModel::class, $id);
     }
 
     public function create(): void

@@ -6,14 +6,14 @@ use app\models\BookingModel;
 
 class BookingController extends BaseController
 {
-    public function viewAll(): void
+    public function getAll(): void
     {
-        $this->handleViewAll(BookingModel::class);
+        $this->handleGetAllData(BookingModel::class);
     }
 
-    public function viewById(int $id): void
+    public function getById(int $id): void
     {
-        $this->handleViewById(BookingModel::class, $id);
+        $this->handleGetDataById(BookingModel::class, $id);
     }
 
     public function create(): void

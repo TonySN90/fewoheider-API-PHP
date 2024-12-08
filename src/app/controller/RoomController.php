@@ -6,14 +6,14 @@ use app\models\RoomModel;
 
 class RoomController extends BaseController
 {
-    public function viewAll(): void
+    public function getAll(): void
     {
-        $this->handleViewAll(RoomModel::class);
+        $this->handleGetAllData(RoomModel::class);
     }
 
-    public function viewById(int $id): void
+    public function getById(int $id): void
     {
-        $this->handleViewById(RoomModel::class, $id);
+        $this->handleGetDataById(RoomModel::class, $id);
     }
 
     public function create(): void
