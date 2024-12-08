@@ -4,9 +4,12 @@ namespace app\controller;
 use Firebase\JWT\JWT;
 use app\models\UserModel;
 use PDO;
+use app\traits\EmailVerification;
 
 class AuthController extends CoreController
 {
+
+    use EmailVerification;
     private string $jwtSecret;
 
     public function __construct(PDO $database)
