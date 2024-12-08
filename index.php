@@ -24,6 +24,7 @@ $router->addRoute('GET', '/', 'HomeController@index');
 // Auth
 $router->addRoute('POST', '/auth/register', 'AuthController@register');
 $router->addRoute('POST', '/auth/login', 'AuthController@login');
+$router->addRoute('GET', '/auth/verify', 'AuthController@verifyAccount');
 
 // API
 $router->addApiRoutes('/v1/bookings', 'BookingController', [$jwtAuthMiddleware, 'handle']);
