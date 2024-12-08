@@ -18,6 +18,30 @@ class AuthController extends CoreController
         $this->jwtSecret = $_ENV['JWT_SECRET'];
     }
 
+    public function verifyAccount(): void
+    {
+        $token = $_GET['token'] ?? null;
+
+        if (!$token) {
+            $this->jsonResponse(['error' => 'Verification token is missing'], 400);
+        }
+
+        $userModel = new UserModel($this->database);
+        $user = $userModel->getUserByVerificationToken($token);
+
+        if (!$user) {
+            $this->jsonResponse(['error' => 'Invalid or expired verification token'], 400);
+        }
+
+        if ($userModel->verifyUser($token)) { // Verwende den Token direkt
+            $this->jsonResponse(['message' => 'Account successfully verified']);
+        } else {
+            $this->jsonResponse(['error' => 'Failed to verify account'], 500);
+        }
+
+    }
+
+
     public function register(): void
     {
         $data = json_decode(file_get_contents('php://input'), true);
