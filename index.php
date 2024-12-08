@@ -5,15 +5,31 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 require_once "autoload.php";
+require_once __DIR__ . '/vendor/autoload.php';
 
 use app\routes\Router;
+use app\middleware\JwtAuthMiddleware;
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
 $router = new Router();
 
+$jwtAuthMiddleware = new JwtAuthMiddleware();
+
+// Index
 $router->addRoute('GET', '/', 'HomeController@index');
-$router->addApiRoutes('/v1/bookings', 'BookingController');
-$router->addApiRoutes('/v1/guests', 'GuestController');
-$router->addApiRoutes('/v1/rooms', 'RoomController');
+
+// Auth
+$router->addRoute('POST', '/auth/register', 'AuthController@register');
+$router->addRoute('POST', '/auth/login', 'AuthController@login');
+
+// API
+$router->addApiRoutes('/v1/bookings', 'BookingController', [$jwtAuthMiddleware, 'handle']);
+$router->addApiRoutes('/v1/guests', 'GuestController', [$jwtAuthMiddleware, 'handle']);
+$router->addApiRoutes('/v1/rooms', 'RoomController', [$jwtAuthMiddleware, 'handle']);
+$router->addApiRoutes('/v1/users', 'RoomController', [$jwtAuthMiddleware, 'handle']);
 
 $router->dispatch();
 
