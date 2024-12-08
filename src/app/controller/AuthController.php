@@ -54,12 +54,21 @@ class AuthController extends CoreController
         }
 
         $userModel = new UserModel($this->database);
-        if ($userModel->createUser($username, $password, $email)) {
-            $this->jsonResponse(['message' => 'User registered successfully']);
+        if ($userModel->getUserByUsername($username) || $userModel->getUserByEmail($email)) {
+            $this->jsonResponse(['error' => 'Username or email already exists'], 400);
+        }
+
+        $verificationToken = bin2hex(random_bytes(16));
+        if ($userModel->createUser($username, $password, $email, $verificationToken)) {
+            $this->sendVerificationEmail($email, $verificationToken);
+            $this->jsonResponse(['message' => 'User registered successfully. Please check your email for verification.']);
         } else {
             $this->jsonResponse(['error' => 'Failed to register user'], 500);
         }
     }
+
+
+
 
     public function login(): void
     {
