@@ -1,8 +1,6 @@
 <?php
 
 namespace app\controller;
-
-use JetBrains\PhpStorm\NoReturn;
 use PDO;
 
 /**
@@ -11,13 +9,8 @@ use PDO;
  * A base controller providing common methods for handling CRUD operations
  * and JSON responses. Designed to be extended by specific controllers.
  */
-abstract class BaseController
+abstract class BaseController extends CoreController
 {
-    /**
-     * @var PDO $database The PDO instance for database interactions.
-     */
-    protected PDO $database;
-
     /**
      * BaseController constructor.
      *
@@ -25,24 +18,7 @@ abstract class BaseController
      */
     public function __construct(PDO $database)
     {
-        $this->database = $database;
-    }
-
-    /**
-     * Sends a JSON response and terminates the script execution.
-     *
-     * @param array|object $data The data to include in the JSON response.
-     * @param int $statusCode The HTTP status code for the response (default: 200).
-     *
-     * @return void
-     */
-    #[NoReturn]
-    protected function jsonResponse(array|object $data, int $statusCode = 200): void
-    {
-        http_response_code($statusCode);
-        header('Content-Type: application/json');
-        echo json_encode($data);
-        exit;
+        parent::__construct($database);
     }
 
     /**
@@ -85,7 +61,7 @@ abstract class BaseController
      *
      * @return void
      */
-    protected function handleViewAll(string $modelClass): void
+    protected function handleGetAllData(string $modelClass): void
     {
         $data = $this->getAllData($modelClass);
 
@@ -105,7 +81,7 @@ abstract class BaseController
      *
      * @return void
      */
-    protected function handleViewById(string $modelClass, int $id): void
+    protected function handleGetDataById(string $modelClass, int $id): void
     {
         $data = $this->getDataById($modelClass, $id);
 
@@ -187,7 +163,7 @@ abstract class BaseController
      *
      * @return void
      */
-    abstract public function viewAll(): void;
+    abstract public function getAll(): void;
 
     /**
      * Abstract method to retrieve a single resource by ID.
@@ -196,7 +172,7 @@ abstract class BaseController
      *
      * @return void
      */
-    abstract public function viewById(int $id): void;
+    abstract public function getById(int $id): void;
 
     /**
      * Abstract method to create a new resource.
