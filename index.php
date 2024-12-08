@@ -29,7 +29,6 @@ $router->addRoute('POST', '/auth/login', 'AuthController@login');
 $router->addApiRoutes('/v1/bookings', 'BookingController', [$jwtAuthMiddleware, 'handle']);
 $router->addApiRoutes('/v1/guests', 'GuestController', [$jwtAuthMiddleware, 'handle']);
 $router->addApiRoutes('/v1/rooms', 'RoomController', [$jwtAuthMiddleware, 'handle']);
-$router->addApiRoutes('/v1/users', 'RoomController', [$jwtAuthMiddleware, 'handle']);
 
 $router->dispatch();
 
