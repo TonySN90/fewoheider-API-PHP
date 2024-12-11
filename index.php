@@ -10,6 +10,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 use app\routes\Router;
 use app\middleware\JwtAuthMiddleware;
 use Dotenv\Dotenv;
+use app\middleware\CorsMiddleware;
 
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
@@ -17,6 +18,8 @@ $dotenv->load();
 $router = new Router();
 
 $jwtAuthMiddleware = new JwtAuthMiddleware();
+$corsMiddleware = new CorsMiddleware();
+$corsMiddleware->handle();
 
 // Index
 $router->addRoute('GET', '/', 'HomeController@index');
